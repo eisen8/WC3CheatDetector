@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WC3CheatDetector": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

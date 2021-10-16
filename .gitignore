@@ -1,0 +1,8 @@
+[Oo]bj/
+bin/*/CheatPacks/
+bin/*/intermed/
+bin/*/tests/
+.vs/
+.git/
+*.editorconfig
+*.user
