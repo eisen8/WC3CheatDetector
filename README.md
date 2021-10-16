@@ -1,8 +1,14 @@
 # WC3CheatTools
 WC3CheatTools is a set of tools for Warcraft III for interacting with cheated maps.
 
+## Requirements
+* These tools use .NET core 3.1. You will need to install .NET in order to use them. https://dotnet.microsoft.com/download
+* These tools have been tested on Windows 10 only. It is possible they may not work correctly on other versions or operating systems.
+* These tools currently only support x64.
+* These tools were developed using Visual Studio 2019.
+
 ## WC3CheatDetector
-A tool for detecting injected cheats within a Warcraft III Map File. Configuration is defined in the AppConfig file.
+A tool for detecting injected cheats within a Warcraft III Map File. Configuration is defined in the AppConfig file. 
 ### Settings:
 * **InGameMode**: Whether or not to use InGameMode. If true, attempts to find the current map used by the game and checks for cheats on that file. If false, looks for map files in the directory specified by InputDir.
 * **InputDir**: Path to the input directory to check for maps in. Not used InGameMode.
