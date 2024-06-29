@@ -1,4 +1,4 @@
-﻿using WC3CheatDetector;
+﻿using WC3CheatDetector.Utils;
 
 namespace WC3CheatDetector
 {

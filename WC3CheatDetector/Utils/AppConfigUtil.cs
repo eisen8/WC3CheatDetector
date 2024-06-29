@@ -3,7 +3,7 @@ using System.Configuration;
 using System.IO;
 using System.Text;
 
-namespace WC3CheatDetector
+namespace WC3CheatDetector.Utils
 {
     /// <summary>
     /// Class that contains various AppConfig utility methods.

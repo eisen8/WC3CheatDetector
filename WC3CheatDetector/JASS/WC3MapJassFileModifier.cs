@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO;
+using WC3CheatDetector.Utils;
 
-namespace WC3CheatDetector
+namespace WC3CheatDetector.JASS
 {
     /// <summary>
     /// Modifies the Warcraft III Map war3map JASS file.

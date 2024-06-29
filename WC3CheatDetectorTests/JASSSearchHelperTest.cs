@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using WC3CheatDetector;
+using WC3CheatDetector.JASS;
 using WC3CheatDetector.Models;
 
 namespace WC3CheatDetectorTests

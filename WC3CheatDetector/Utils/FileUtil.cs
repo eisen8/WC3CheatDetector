@@ -2,7 +2,7 @@
 using System.IO;
 using System.Security.Cryptography;
 
-namespace WC3CheatDetector
+namespace WC3CheatDetector.Utils
 {
     /// <summary>
     /// Various file system related utility methods.
@@ -12,7 +12,7 @@ namespace WC3CheatDetector
         private static string _outputDir = "output";
         private static string _tempDir = _outputDir + "\\temp";
         private static string _inputDir = "input";
-        
+
         /// <summary>
         /// Sets the input and output directories.
         /// </summary>
@@ -69,7 +69,8 @@ namespace WC3CheatDetector
                 {
                     Directory.Delete(_tempDir, true);
                 }
-            } catch { }
+            }
+            catch { }
 
             try
             {

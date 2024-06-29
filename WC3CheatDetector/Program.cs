@@ -1,12 +1,18 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.IO;
-using WC3CheatDetector;
 using WC3CheatDetector.Models;
+using WC3CheatDetector.Utils;
+using WC3CheatDetector.WhiteList;
 
 namespace WC3CheatDetector
 {
     class Program
     {
+        private static List<WhiteListItem> _whiteList;
+        private static List<BlackListItem> _blackList;
+
         public static void Main()
         {
             try
@@ -16,6 +22,7 @@ namespace WC3CheatDetector
                 Logger.Log("Starting WC3CheatDetector");
                 FileUtil.SetDirectories(appConfig.InputDir, appConfig.OutputDir);
                 FileUtil.CreateDirectories();
+                loadWhiteList();
 
                 if (appConfig.InGameMode)
                 {
@@ -43,6 +50,14 @@ namespace WC3CheatDetector
             Logger.Log("Press Enter to exit");
             Console.ReadKey();
         }
+        private static void loadWhiteList()
+        {
+            String whiteListJson = File.ReadAllText("./WhiteList/WhiteList.json");
+            String blackListJson = File.ReadAllText("./WhiteList/BlackList.json");
+
+            _whiteList = JsonConvert.DeserializeObject<List<WhiteListItem>>(whiteListJson);
+            _blackList = JsonConvert.DeserializeObject<List<BlackListItem>>(blackListJson);
+        }
 
         private static void runDirMod(AppConfig appConfig)
         {
@@ -64,8 +79,9 @@ namespace WC3CheatDetector
                 string hash = FileUtil.CalculateFileMD5Hash(tempMapFilePath);
                 int fileSizeKB = FileUtil.CalculateFileSizeKB(map);
                 Logger.LogEmptyLine();
-                Logger.Log($"---- #{i + 1} --- {map.Name} --- {fileSizeKB} kb -- MD5: {hash}");
-                Logger.Log($"Processing map");
+                Logger.Log($"---- #{i + 1} --- {map.Name} --- {fileSizeKB} kb");
+                Logger.Log($"MD5: {hash}");
+                checkWhiteAndBlackLists(hash);
                 cf.FindCheats(tempMapFilePath);
             }
         }
@@ -129,8 +145,24 @@ namespace WC3CheatDetector
             FileInfo map = new FileInfo(tempMapFilePath);
             string hash = FileUtil.CalculateFileMD5Hash(tempMapFilePath);
             int fileSizeKB = FileUtil.CalculateFileSizeKB(map);
-            Logger.Log($"Processing InGame map {map.Name} --- {fileSizeKB} kb --- MD5: {hash}");
+            Logger.Log($"Processing InGame map {map.Name} --- {fileSizeKB} kb");
+            Logger.Log($"MD5: {hash}");
+            checkWhiteAndBlackLists(hash);
             cf.FindCheats(tempMapFilePath);
+        }
+
+        private static void checkWhiteAndBlackLists(String hash)
+        {
+            WhiteListItem wl = _whiteList.Find(x => x.Hash.Equals(hash));
+            if (wl != null)
+            {
+                Logger.Log($"** Map is whitelisted. **");
+            }
+            BlackListItem bl = _blackList.Find(x => x.Hash.Equals(hash));
+            if (bl != null)
+            {
+                Logger.Log($"** Map is blackListed. CheatPack: {bl.CheatPack}, Activator: {bl.Activator}. **");
+            }
         }
     }
 }

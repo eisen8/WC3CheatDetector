@@ -16,17 +16,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+    <PackageReference Include="System.Text.Json" Version="8.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="lib\x64\StormLib.dll">
+    <None Update="WhiteList\BlackList.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Lib\x64\StormLib.dll">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="WhiteList\WhiteList.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy &quot;$(ProjectDir)lib\$(Platform)\&quot; &quot;$(TargetDir)\&quot; /Y" />
+    <Exec Command="xcopy &quot;$(ProjectDir)Lib\$(Platform)\&quot; &quot;$(TargetDir)\&quot; /Y" />
   </Target>
 
 </Project>

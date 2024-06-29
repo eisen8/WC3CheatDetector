@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 using WC3CheatDetector.Models;
+using WC3CheatDetector.Utils;
 
 namespace WC3CheatDetector
 {

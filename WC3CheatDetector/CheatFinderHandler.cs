@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using WC3CheatDetector;
-using WC3CheatDetector.Models;
+using WC3CheatDetector.JASS;
+using WC3CheatDetector.Utils;
 
 namespace WC3CheatDetector
 {

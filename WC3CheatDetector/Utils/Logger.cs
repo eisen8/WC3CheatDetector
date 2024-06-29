@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace WC3CheatDetector
+namespace WC3CheatDetector.Utils
 {
     /// <summary>
     /// A simple logger

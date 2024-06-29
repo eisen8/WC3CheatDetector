@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WC3CheatDetector.Models
+namespace WC3CheatDetector.Utils
 {
     /// <summary>
     /// Various extension methods

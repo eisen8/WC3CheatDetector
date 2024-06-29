@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using WC3CheatDetector.Models;
 
-namespace WC3CheatDetector
+namespace WC3CheatDetector.JASS
 {
     /// <summary>
     /// Helper class for searching text from JASS files
@@ -138,7 +138,7 @@ namespace WC3CheatDetector
                     // Get back the match from the original input using our position 'map'.
                     int startInd = _indexMap[m.Index];
                     int endInd = _indexMap[m.Index + (m.Value.Length - 1)];
-                    string value = Input.Substring(startInd, (endInd - startInd) + 1);
+                    string value = Input.Substring(startInd, endInd - startInd + 1);
                     rMatches.Add(new JRMatch(value, startInd));
                 }
             }
@@ -165,13 +165,13 @@ namespace WC3CheatDetector
             {
                 int startInd = _indexMap[m.Index];
                 int endInd = _indexMap[m.Index + (m.Value.Length - 1)];
-                string value = Input.Substring(startInd, (endInd - startInd) + 1);
+                string value = Input.Substring(startInd, endInd - startInd + 1);
                 return new JRMatch(value, startInd);
             }
             else
             {
                 return new JRMatch();
-            }    
+            }
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace WC3CheatDetector
             {
                 int startInd = _indexMap[m.Index + searchStartIndex];
                 int endInd = _indexMap[m.Index + searchStartIndex + (m.Value.Length - 1)];
-                string value = Input.Substring(startInd, (endInd - startInd) + 1);
+                string value = Input.Substring(startInd, endInd - startInd + 1);
                 return new JRMatch(value, startInd);
             }
             else
