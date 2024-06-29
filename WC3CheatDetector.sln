@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WC3CheatDetectorTests", "WC3CheatDetectorTests\WC3CheatDetectorTests.csproj", "{1D876FD2-95B9-4848-B4F8-C7A0AA969D2C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WC3CheatDetector", "WC3CheatDetector\WC3CheatDetector.csproj", "{ABD8F440-B02E-4B58-8322-4CBCDBCDC5A6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WC3CheatDetectorCpp", "WC3CheatDetectorCpp\WC3CheatDetectorCpp.vcxproj", "{2FA5E8A2-C609-44EE-82F5-B012DF40CA92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{005B595F-D26A-4ACF-A78D-D4FB4028299C}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1D876FD2-95B9-4848-B4F8-C7A0AA969D2C}.Debug|x64.ActiveCfg = Debug|x64
+		{1D876FD2-95B9-4848-B4F8-C7A0AA969D2C}.Debug|x64.Build.0 = Debug|x64
+		{1D876FD2-95B9-4848-B4F8-C7A0AA969D2C}.Release|x64.ActiveCfg = Release|x64
+		{ABD8F440-B02E-4B58-8322-4CBCDBCDC5A6}.Debug|x64.ActiveCfg = Debug|x64
+		{ABD8F440-B02E-4B58-8322-4CBCDBCDC5A6}.Debug|x64.Build.0 = Debug|x64
+		{ABD8F440-B02E-4B58-8322-4CBCDBCDC5A6}.Release|x64.ActiveCfg = Release|x64
+		{ABD8F440-B02E-4B58-8322-4CBCDBCDC5A6}.Release|x64.Build.0 = Release|x64
+		{2FA5E8A2-C609-44EE-82F5-B012DF40CA92}.Debug|x64.ActiveCfg = Debug|x64
+		{2FA5E8A2-C609-44EE-82F5-B012DF40CA92}.Debug|x64.Build.0 = Debug|x64
+		{2FA5E8A2-C609-44EE-82F5-B012DF40CA92}.Release|x64.ActiveCfg = Release|x64
+		{2FA5E8A2-C609-44EE-82F5-B012DF40CA92}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {626C7E5A-6817-49A7-9393-6BAEFE314EF1}
+	EndGlobalSection
+EndGlobal

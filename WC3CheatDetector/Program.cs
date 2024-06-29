@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
-using WC3CheatToolsSharedLib;
-using WC3CheatToolsSharedLib.Models;
+using WC3CheatDetector;
+using WC3CheatDetector.Models;
 
 namespace WC3CheatDetector
 {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using WC3CheatToolsSharedLib;
-using WC3CheatToolsSharedLib.Models;
+using WC3CheatDetector;
+using WC3CheatDetector.Models;
 
 namespace WC3CheatDetector
 {
@@ -37,9 +37,8 @@ namespace WC3CheatDetector
             checkContains(h, sm, new List<string> { "nzHash", "Nuza" }, "Map References Nuza.", 9); // Nuza
             checkContains(h, sm, new List<string> { "Sabrac", "sbrkw" }, "Map References Subrac.", 9); // Sabrac (type any 5 of the activator words)
             checkContains(h, sm, "Wc3Edit", "Map References Wc3Edit.", 9); // Generic
+            checkContains(h, sm, "DoNotSaveReplay", "Map contains DoNotSaveReplay.", 9);
 
-
-            checkContains(h, sm, "DoNotSaveReplay", "Map contains DoNotSaveReplay.", 8);
             checkContains(h, sm, "CheatPack", "Map contains the word CheatPack.", 8);
             checkContains(h, sm, "Activator", "Map references an Activator", 8);
 

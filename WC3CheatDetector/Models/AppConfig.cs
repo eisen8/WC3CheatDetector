@@ -1,4 +1,4 @@
-﻿using WC3CheatToolsSharedLib;
+﻿using WC3CheatDetector;
 
 namespace WC3CheatDetector
 {
