@@ -1,5 +1,5 @@
 # WC3CheatDetector
-A tool for detecting injected cheatpacks in Warcraft III map files. It can be used while in a game or on standalone w3x files. The purpose of this tool is to avoid joining or accidently hosting cheated maps.
+A console app tool for detecting injected cheatpacks in Warcraft III map files. It can be used while in a game or on standalone w3x files. The purpose of this tool is to avoid joining or accidently hosting cheated maps.
 
 ## Requirements
 * Requires .NET core 3.1. https://dotnet.microsoft.com/download

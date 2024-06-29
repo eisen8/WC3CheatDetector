@@ -2,38 +2,42 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using WC3CheatDetector.Models;
+using System.Linq;
+using WC3CheatDetector.ProcessUtility;
 using WC3CheatDetector.Utils;
 using WC3CheatDetector.WhiteList;
 
 namespace WC3CheatDetector
 {
+    /// <summary>
+    /// WC3CheatDetector console app program
+    /// </summary>
     class Program
     {
         private static List<WhiteListItem> _whiteList;
         private static List<BlackListItem> _blackList;
 
+        /// <summary>
+        /// Main program
+        /// </summary>
         public static void Main()
         {
             try
             {
+                // Setup App config and logger
+                Logger.Log("Starting WC3CheatDetector");
                 AppConfig appConfig = new AppConfig();
                 Logger.SetLogLevel(appConfig.LogLevel);
-                Logger.Log("Starting WC3CheatDetector");
+                
+                // Setup directories
                 FileUtil.SetDirectories(appConfig.InputDir, appConfig.OutputDir);
                 FileUtil.CreateDirectories();
-                loadWhiteList();
 
-                if (appConfig.InGameMode)
-                {
-                    Logger.Log("InGame Mode. Finding current game.");
-                    runInGameMode();
-                }
-                else
-                {
-                    Logger.Log($"Directory Mode. Input={appConfig.InputDir}, Output={appConfig.OutputDir}.");
-                    runDirMod(appConfig);
-                }
+                // Setup whitelist and blacklist
+                loadWhiteAndBlackLists();
+
+                // Run program
+                checkMapsForCheats(appConfig);
             }
             catch (Exception e)
             {
@@ -50,7 +54,11 @@ namespace WC3CheatDetector
             Logger.Log("Press Enter to exit");
             Console.ReadKey();
         }
-        private static void loadWhiteList()
+
+        /// <summary>
+        /// Loads the whitelist and blacklist
+        /// </summary>
+        private static void loadWhiteAndBlackLists()
         {
             String whiteListJson = File.ReadAllText("./WhiteList/WhiteList.json");
             String blackListJson = File.ReadAllText("./WhiteList/BlackList.json");
@@ -59,34 +67,54 @@ namespace WC3CheatDetector
             _blackList = JsonConvert.DeserializeObject<List<BlackListItem>>(blackListJson);
         }
 
-        private static void runDirMod(AppConfig appConfig)
+        /// <summary>
+        /// Checks the maps for cheats.
+        /// </summary>
+        /// <param name="appConfig">The app config</param>
+        private static void checkMapsForCheats(AppConfig appConfig)
         {
-            // Get maps from input folder
-            FileInfo[] maps = FileUtil.GetInputMaps(appConfig.MapFilter, appConfig.CheckSubfolders);
-            Logger.Log($"{maps.Length} input map files found");
-            if (maps.Length == 0)
+            List<FileInfo> maps = new List<FileInfo>();
+
+            if (appConfig.InGameMode)
             {
-                Logger.Warn($"No WC3 maps (.w3x) after filter '{appConfig.MapFilter}' found in input directory. Place maps in the input directory {appConfig.InputDir} and rerun program.");
-                return;
+                // Get map based on current game
+                Logger.Log("InGame Mode. Finding current game.");
+                String filePath = getCurrentGameMapFilePath();
+                maps.Add(new FileInfo(filePath));
+            } else
+            {
+                // Get maps from input folder
+                Logger.Log($"Directory Mode. Input={appConfig.InputDir}, Output={appConfig.OutputDir}.");
+                maps = FileUtil.GetInputMaps(appConfig.MapFilter, appConfig.CheckSubfolders).ToList();
+                Logger.Log($"{maps.Count} input map files found");
+                if (maps.Count == 0)
+                {
+                    Logger.Warn($"No WC3 maps (.w3x) after filter '{appConfig.MapFilter}' found in input directory. Place maps in the input directory {appConfig.InputDir} and rerun program.");
+                    return;
+                }
             }
 
             // Find cheats for each map
-            CheatFinderHandler cf = new CheatFinderHandler();
-            for (int i = 0; i < maps.Length; i++)
+            CheatDetector cf = new CheatDetector();
+            for (int i = 0; i < maps.Count; i++)
             {
-                FileInfo map = maps[i];
+                FileInfo map = maps.ElementAt(i);
                 string tempMapFilePath = FileUtil.CopyToTemp(map.FullName);
                 string hash = FileUtil.CalculateFileMD5Hash(tempMapFilePath);
                 int fileSizeKB = FileUtil.CalculateFileSizeKB(map);
                 Logger.LogEmptyLine();
                 Logger.Log($"---- #{i + 1} --- {map.Name} --- {fileSizeKB} kb");
-                Logger.Log($"MD5: {hash}");
+                Logger.Log($"---- MD5: {hash}");
                 checkWhiteAndBlackLists(hash);
                 cf.FindCheats(tempMapFilePath);
             }
         }
 
-        private static void runInGameMode()
+        /// <summary>
+        /// Uses ProcessUtility to the find the current game's file path.
+        /// </summary>
+        /// <returns>The file path to the map.</returns>
+        private static String getCurrentGameMapFilePath()
         {
             string filePath = null;
             uint pid = 0;
@@ -112,7 +140,7 @@ namespace WC3CheatDetector
                     {
                         Logger.Error($"Internal Error getting the PID of Warcraft III.exe. ErrorCode: {error.ErrorCode}. ErrorMessage: {error.ErrorMessage}");
                     }
-                    return;
+                    return null;
                 }
 
                 retries--;
@@ -123,7 +151,7 @@ namespace WC3CheatDetector
             while (!success)
             {
                 success = pu.GetOpenFile(pid, ".w3x", out filePath);
-                if (!success || string.IsNullOrWhiteSpace(filePath) && retries == 0)
+                if (!success || String.IsNullOrWhiteSpace(filePath) && retries == 0)
                 {
                     PUStatus error = pu.GetLastError();
                     if (error.ErrorCode == 0)
@@ -134,23 +162,19 @@ namespace WC3CheatDetector
                     {
                         Logger.Error($"Internal Error getting .w3x file of current game. ErrorCode: {error.ErrorCode}. ErrorMessage: {error.ErrorMessage}");
                     }
-                    return;
+                    return null;
                 }
 
                 retries--;
             }
 
-            CheatFinderHandler cf = new CheatFinderHandler();
-            string tempMapFilePath = FileUtil.CopyToTemp(filePath);
-            FileInfo map = new FileInfo(tempMapFilePath);
-            string hash = FileUtil.CalculateFileMD5Hash(tempMapFilePath);
-            int fileSizeKB = FileUtil.CalculateFileSizeKB(map);
-            Logger.Log($"Processing InGame map {map.Name} --- {fileSizeKB} kb");
-            Logger.Log($"MD5: {hash}");
-            checkWhiteAndBlackLists(hash);
-            cf.FindCheats(tempMapFilePath);
+            return filePath;
         }
 
+        /// <summary>
+        /// Checks if a map MD5 hash is in the whitelist or the blacklist.
+        /// </summary>
+        /// <param name="hash"></param>
         private static void checkWhiteAndBlackLists(String hash)
         {
             WhiteListItem wl = _whiteList.Find(x => x.Hash.Equals(hash));

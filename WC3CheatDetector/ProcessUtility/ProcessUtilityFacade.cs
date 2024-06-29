@@ -1,13 +1,12 @@
 ﻿using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using WC3CheatDetector.Models;
 using WC3CheatDetector.Utils;
 
-namespace WC3CheatDetector
+namespace WC3CheatDetector.ProcessUtility
 {
     /// <summary>
-    /// Facade for interacting with WC3CheatDetectorCpp.dll
+    /// Facade for interacting with ProccessUtilityCpp.dll
     /// </summary>
     public class ProcessUtilityFacade
     {
@@ -89,7 +88,7 @@ namespace WC3CheatDetector
         {
             // Guess the drive until we find the file. Then convert it.
             char currentDrive = 'A';
-            while(currentDrive <= 'Z')
+            while (currentDrive <= 'Z')
             {
                 if (Directory.Exists(currentDrive + ":\\"))
                 {

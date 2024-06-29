@@ -2,17 +2,17 @@
 using System.Linq;
 using WC3CheatDetector.Utils;
 
-namespace WC3CheatDetector
+namespace WC3CheatDetector.JASS
 {
     /// <summary>
     /// Holds the warnings and suspicious lines found related to the JASS file. 
     /// </summary>
-    class JSusManager
+    class JSus
     {
         private readonly List<string> _warnings;
         private readonly List<string> _suspiciousLines;
 
-        public JSusManager()
+        public JSus()
         {
             _warnings = new List<string>();
             _suspiciousLines = new List<string>();

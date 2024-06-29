@@ -10,6 +10,12 @@ namespace WC3CheatDetector.Utils
     /// </summary>
     public class AppConfigUtil
     {
+        /// <summary>
+        /// Retrieves a string from the App Config
+        /// </summary>
+        /// <param name="key">The key</param>
+        /// <returns>The value string. Throws an exception if not found.</returns>
+        /// <exception cref="ArgumentException">Thrown if the key is not found.</exception>
         public static string GetString(string key)
         {
             string stringValue = ConfigurationManager.AppSettings[key];
@@ -21,6 +27,12 @@ namespace WC3CheatDetector.Utils
             return stringValue;
         }
 
+        /// <summary>
+        /// Retrieves a string (formatted as a directory) from the App Config
+        /// </summary>
+        /// <param name="key">The key</param>
+        /// <returns>The properly full path of the directory string. Throws an exception if not found.</returns>
+        /// <exception cref="ArgumentException">Thrown if the key is not found.</exception>
         public static string GetDirectory(string key)
         {
             string stringValue = ConfigurationManager.AppSettings[key];
@@ -38,6 +50,13 @@ namespace WC3CheatDetector.Utils
             return fullPath;
         }
 
+        /// <summary>
+        /// Retrieves an enum from the App Config
+        /// </summary>
+        /// <typeparam name="T">The enum type</typeparam>
+        /// <param name="key">The key</param>
+        /// <returns>The properly full path of the directory string. Throws an exception if not found.</returns>
+        /// <exception cref="ArgumentException">Thrown if the key is not found.</exception>
         public static T GetEnum<T>(string key) where T : Enum
         {
             string stringValue = ConfigurationManager.AppSettings[key];
@@ -68,6 +87,12 @@ namespace WC3CheatDetector.Utils
             }
         }
 
+        /// <summary>
+        /// Retrieves a bool from the App Config. Supports many different formats (t, T, 1, true, True).
+        /// </summary>
+        /// <param name="key">The key</param>
+        /// <returns>The value bool. Throws an exception if not found.</returns>
+        /// <exception cref="ArgumentException">Thrown if the key is not found.</exception>
         public static bool GetBool(string key)
         {
             string stringValue = ConfigurationManager.AppSettings[key];

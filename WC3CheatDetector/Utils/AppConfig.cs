@@ -1,6 +1,4 @@
-﻿using WC3CheatDetector.Utils;
-
-namespace WC3CheatDetector
+﻿namespace WC3CheatDetector.Utils
 {
     /// <summary>
     /// Manages the Application Configuration.

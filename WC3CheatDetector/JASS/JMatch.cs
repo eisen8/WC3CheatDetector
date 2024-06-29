@@ -1,18 +1,18 @@
 ﻿using System;
 
-namespace WC3CheatDetector.Models
+namespace WC3CheatDetector.JASS
 {
     /// <summary>
     /// Represents a Match from the JassRegexHelper
     /// </summary>
-    public class JRMatch
+    public class JMatch
     {
         public string Value { get; private set; }
         public int Index { get; private set; }
         public bool Success { get; private set; }
         public int Length { get { return Value.Length; } }
 
-        public JRMatch(string value, int index)
+        public JMatch(string value, int index)
         {
             Value = value ?? throw new ArgumentNullException("value", "value cannot be null");
             Index = index;
@@ -22,9 +22,9 @@ namespace WC3CheatDetector.Models
         /// <summary>
         /// Constructor for unsuccessful match
         /// </summary>
-        public JRMatch()
+        public JMatch()
         {
-            Value = String.Empty;
+            Value = string.Empty;
             Index = 0;
             Success = false;
         }

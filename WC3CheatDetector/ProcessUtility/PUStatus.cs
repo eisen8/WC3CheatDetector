@@ -1,4 +1,4 @@
-﻿namespace WC3CheatDetector.Models
+﻿namespace WC3CheatDetector.ProcessUtility
 {
     /// <summary>
     /// Represents the return status code from ProcessUtility.

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace WC3CheatDetector
 {
     /// <summary>
-    /// Facade for interacting with MPQ archives. See http://zezula.net/en/mpq/stormlib.html for details on the functions.
+    /// Facade for interacting with MPQ archives using StormLib.dll. See http://zezula.net/en/mpq/stormlib.html for details on the functions.
     /// </summary>
     public class MPQFacade
     {

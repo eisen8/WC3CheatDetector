@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using WC3CheatDetector.Models;
 
 namespace WC3CheatDetector.JASS
 {
     /// <summary>
     /// Helper class for searching text from JASS files
     /// </summary>
-    public class JASSSearchHelper
+    public class JSearch
     {
         /**
          * We are solving two problems here. One is the we want to ignore whitespace in the JASS however we want the output match to include any 
@@ -47,7 +46,7 @@ namespace WC3CheatDetector.JASS
         /// Constructor.
         /// </summary>
         /// <param name="input">The input JASS string to help search.</param>
-        public JASSSearchHelper(string input)
+        public JSearch(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
             {
@@ -109,9 +108,9 @@ namespace WC3CheatDetector.JASS
         /// <param name="pattern">The regex. Do not include whitespace in the regex. Match on "\n" for newlines.</param>
         /// <param name="options">RegexOptions</param>
         /// <returns>The matches if any or an empty list if none</returns>
-        public List<JRMatch> FindMatches(string pattern, RegexOptions options = RegexOptions.IgnoreCase, bool ignoreWhitespace = true)
+        public List<JMatch> FindMatches(string pattern, RegexOptions options = RegexOptions.IgnoreCase, bool ignoreWhitespace = true)
         {
-            List<JRMatch> rMatches = new List<JRMatch>();
+            List<JMatch> rMatches = new List<JMatch>();
 
             if (string.IsNullOrWhiteSpace(pattern))
             {
@@ -125,7 +124,7 @@ namespace WC3CheatDetector.JASS
                 foreach (Match m in matches)
                 {
                     string value = Input.Substring(m.Index, m.Length);
-                    rMatches.Add(new JRMatch(value, m.Index));
+                    rMatches.Add(new JMatch(value, m.Index));
                 }
             }
             else
@@ -139,7 +138,7 @@ namespace WC3CheatDetector.JASS
                     int startInd = _indexMap[m.Index];
                     int endInd = _indexMap[m.Index + (m.Value.Length - 1)];
                     string value = Input.Substring(startInd, endInd - startInd + 1);
-                    rMatches.Add(new JRMatch(value, startInd));
+                    rMatches.Add(new JMatch(value, startInd));
                 }
             }
 
@@ -152,7 +151,7 @@ namespace WC3CheatDetector.JASS
         /// <param name="pattern">The regex pattern to search for.</param>
         /// <param name="options">RegexOptions.</param>
         /// <returns>The first match or an emty match if none.</returns>
-        public JRMatch FindMatch(string pattern, RegexOptions options = RegexOptions.None)
+        public JMatch FindMatch(string pattern, RegexOptions options = RegexOptions.None)
         {
             if (string.IsNullOrWhiteSpace(pattern))
             {
@@ -166,11 +165,11 @@ namespace WC3CheatDetector.JASS
                 int startInd = _indexMap[m.Index];
                 int endInd = _indexMap[m.Index + (m.Value.Length - 1)];
                 string value = Input.Substring(startInd, endInd - startInd + 1);
-                return new JRMatch(value, startInd);
+                return new JMatch(value, startInd);
             }
             else
             {
-                return new JRMatch();
+                return new JMatch();
             }
         }
 
@@ -181,7 +180,7 @@ namespace WC3CheatDetector.JASS
         /// <param name="startIndex">The index to start searching at.</param>
         /// <param name="options">RegexOptions.</param>
         /// <returns>The first match or an emty match if none.</returns>
-        public JRMatch FindMatch(string pattern, int startIndex, RegexOptions options = RegexOptions.None)
+        public JMatch FindMatch(string pattern, int startIndex, RegexOptions options = RegexOptions.None)
         {
             if (string.IsNullOrWhiteSpace(pattern))
             {
@@ -197,11 +196,11 @@ namespace WC3CheatDetector.JASS
                 int startInd = _indexMap[m.Index + searchStartIndex];
                 int endInd = _indexMap[m.Index + searchStartIndex + (m.Value.Length - 1)];
                 string value = Input.Substring(startInd, endInd - startInd + 1);
-                return new JRMatch(value, startInd);
+                return new JMatch(value, startInd);
             }
             else
             {
-                return new JRMatch();
+                return new JMatch();
             }
         }
 
