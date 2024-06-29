@@ -1,15 +1,15 @@
-#include "CTErrorCodes.h"
+#include "PUErrorCodes.h"
 #include <windows.h>
 #include <map>
 #include <string>
 #include <codecvt>
 #include <locale>
-namespace CT
+namespace PU
 {
-	static CTSTATUS LastErrorStatus = 0;
+	static PU_STATUS LastErrorStatus = 0;
 	static std::wstring LastErrorMessage = L"";
 
-	static std::map <CTSTATUS, const std::wstring> ErrorCodeMap = {
+	static std::map <PU_STATUS, const std::wstring> ErrorCodeMap = {
 		{0,  L""}, // Success
 		{1,  L"Generic Error."},
 		{2,  L"Invalid Handle."},
@@ -20,7 +20,7 @@ namespace CT
 		{23, L"Error calling NtQuerySystemInformation."}
 	};
 
-	void SetLastError(CTSTATUS errorStatusCode)
+	void SetLastError(PU_STATUS errorStatusCode)
 	{
 		LastErrorStatus = errorStatusCode;
 
@@ -36,7 +36,7 @@ namespace CT
 		}
 	}
 
-	void SetLastError(CTSTATUS errorStatusCode, const CHAR* errorMessage)
+	void SetLastError(PU_STATUS errorStatusCode, const CHAR* errorMessage)
 	{
 
 		if (ErrorCodeMap.count(errorStatusCode))
@@ -55,7 +55,7 @@ namespace CT
 	}
 
 
-	CTSTATUS GetLastCTError(WCHAR* messageBuffer, rsize_t bufferLength)
+	PU_STATUS GetLastPUError(WCHAR* messageBuffer, rsize_t bufferLength)
 	{
 		DWORD lastError = LastErrorStatus;
 

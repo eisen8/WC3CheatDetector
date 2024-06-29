@@ -1,5 +1,5 @@
 #include "ProcessUtility.h"
-#include "CTErrorCodes.h"
+#include "PUErrorCodes.h"
 #include <windows.h>
 #include <tlhelp32.h>
 #include "NTDefinitions.h"
@@ -53,7 +53,7 @@ DWORD FindProcessId(const WCHAR* processName)
         SafeHandle snap = SafeHandle(CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL));
         if (snap.IsNullOrInvalid())
         {
-            CT::SetLastError(2);
+            PU::SetLastError(2);
             return 0;
         }
 
@@ -65,7 +65,7 @@ DWORD FindProcessId(const WCHAR* processName)
             // Unable to get any processes
             DWORD errorId = GetLastError();
             std::string errorMessage = "SysError " + std::to_string(errorId) + ": " + getSysErrorMessage(errorId);
-            errorId != 0 ? CT::SetLastError(3, errorMessage.c_str()) : CT::SetLastError(3);
+            errorId != 0 ? PU::SetLastError(3, errorMessage.c_str()) : PU::SetLastError(3);
             return 0;
         }
  
@@ -82,7 +82,7 @@ DWORD FindProcessId(const WCHAR* processName)
     }
     catch (const std::exception& ex)
     {
-        CT::SetLastError(1, ex.what());
+        PU::SetLastError(1, ex.what());
         return 0;
     }
 }
@@ -103,7 +103,7 @@ BOOL FindOpenFile(DWORD processId, const WCHAR* fileNameSubstring, WCHAR* fileDi
         HANDLE currentProcess = GetCurrentProcess();
         if (ntdll == NULL)
         {
-            CT::SetLastError(20);
+            PU::SetLastError(20);
             return FALSE;
         }
 
@@ -114,7 +114,7 @@ BOOL FindOpenFile(DWORD processId, const WCHAR* fileNameSubstring, WCHAR* fileDi
         SafeHandle processDup = SafeHandle(OpenProcess(PROCESS_DUP_HANDLE, FALSE, processId));
         if (processDup.IsNullOrInvalid())
         {
-            CT::SetLastError(21);
+            PU::SetLastError(21);
             return FALSE;
         }
 
@@ -128,7 +128,7 @@ BOOL FindOpenFile(DWORD processId, const WCHAR* fileNameSubstring, WCHAR* fileDi
             void* tmp = realloc(handleInfo.get(), handleInfoSize);
             if (tmp == NULL)
             {
-                CT::SetLastError(22);
+                PU::SetLastError(22);
                 return FALSE;
             }
 
@@ -139,7 +139,7 @@ BOOL FindOpenFile(DWORD processId, const WCHAR* fileNameSubstring, WCHAR* fileDi
         if (!NT_SUCCESS(status) || handleInfo == nullptr)
         {
             std::string ntStatus = "NTStatus code: " + std::to_string(status) + ".";
-            CT::SetLastError(23, ntStatus.c_str());
+            PU::SetLastError(23, ntStatus.c_str());
             return FALSE;
         }
 
@@ -176,7 +176,7 @@ BOOL FindOpenFile(DWORD processId, const WCHAR* fileNameSubstring, WCHAR* fileDi
                 void* tmp = realloc(objectNameInfo.get(), objectNameInfoSize);
                 if (tmp == NULL)
                 {
-                    CT::SetLastError(22);
+                    PU::SetLastError(22);
                     return FALSE;
                 }
 
@@ -205,7 +205,7 @@ BOOL FindOpenFile(DWORD processId, const WCHAR* fileNameSubstring, WCHAR* fileDi
     }
     catch (const std::exception& ex)
     {
-        CT::SetLastError(1, ex.what());
+        PU::SetLastError(1, ex.what());
         return FALSE;
     }
 }

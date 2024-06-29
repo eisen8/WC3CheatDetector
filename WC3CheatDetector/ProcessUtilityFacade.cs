@@ -6,11 +6,11 @@ using WC3CheatDetector.Models;
 namespace WC3CheatDetector
 {
     /// <summary>
-    /// Facade for interacting with WC3CheatToolsSharedCpp.dll
+    /// Facade for interacting with WC3CheatDetectorCpp.dll
     /// </summary>
     public class ProcessUtilityFacade
     {
-        private const string DLL = "WC3CheatDetectorCpp.dll";
+        private const string DLL = "ProcessUtilityCpp.dll";
 
         [DllImport(DLL, CallingConvention = CallingConvention.StdCall)]
         private static extern uint FindProcessId([MarshalAs(UnmanagedType.LPWStr)] string processName);
@@ -20,17 +20,17 @@ namespace WC3CheatDetector
         private static extern bool FindOpenFile(uint processId, [MarshalAs(UnmanagedType.LPWStr)] string fileNameSubstring, StringBuilder fileDirBuffer, int bufferLength);
 
         [DllImport(DLL, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Unicode)]
-        private static extern uint GetLastCTError(StringBuilder messageBuffer, int bufferLength);
+        private static extern uint GetLastPUError(StringBuilder messageBuffer, int bufferLength);
 
         /// <summary>
         /// Gets the Last Error returned from the Process Utility functions.
         /// </summary>
-        /// <returns>The CTStatus containing the last error. The ErrorCode will be 0 if there was no errors.</returns>
-        public CTStatus GetLastError()
+        /// <returns>The PUStatus containing the last error. The ErrorCode will be 0 if there was no errors.</returns>
+        public PUStatus GetLastError()
         {
             StringBuilder messageBuffer = new StringBuilder(2048);
-            uint status = GetLastCTError(messageBuffer, messageBuffer.Capacity);
-            return new CTStatus(status, messageBuffer.ToString());
+            uint status = GetLastPUError(messageBuffer, messageBuffer.Capacity);
+            return new PUStatus(status, messageBuffer.ToString());
         }
 
         /// <summary>

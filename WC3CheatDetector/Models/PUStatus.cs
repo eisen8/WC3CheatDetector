@@ -1,9 +1,9 @@
 ﻿namespace WC3CheatDetector.Models
 {
     /// <summary>
-    /// Represents the return error code from CT (cheat tool) ProcessUtility.
+    /// Represents the return status code from ProcessUtility.
     /// </summary>
-    public class CTStatus
+    public class PUStatus
     {
         /// <summary>
         /// The Error Code. 0 if there is no error.
@@ -15,7 +15,7 @@
         /// </summary>
         public string ErrorMessage { get; private set; }
 
-        public CTStatus(uint errorCode, string errorMessage)
+        public PUStatus(uint errorCode, string errorMessage)
         {
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;

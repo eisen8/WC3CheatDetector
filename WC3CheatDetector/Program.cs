@@ -87,7 +87,7 @@ namespace WC3CheatDetector
                 success = (pid != 0);
                 if (!success && retries == 0)
                 {
-                    CTStatus error = pu.GetLastError();
+                    PUStatus error = pu.GetLastError();
                     if (error.ErrorCode == 0)
                     {
                         Logger.Error("Could not find Warcraft III.exe. Is the game running?");
@@ -109,7 +109,7 @@ namespace WC3CheatDetector
                 success = pu.GetOpenFile(pid, ".w3x", out filePath);
                 if (!success || string.IsNullOrWhiteSpace(filePath) && retries == 0)
                 {
-                    CTStatus error = pu.GetLastError();
+                    PUStatus error = pu.GetLastError();
                     if (error.ErrorCode == 0)
                     {
                         Logger.Error("Could not find the .w3x file of the current game. Are you in a game? Note: Sometimes WC3 doesn't lock the file and you need to restart your computer.");

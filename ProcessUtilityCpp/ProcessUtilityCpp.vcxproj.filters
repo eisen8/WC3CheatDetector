@@ -21,7 +21,7 @@
     <ClInclude Include="ProcessUtility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CTErrorCodes.h">
+    <ClInclude Include="PUErrorCodes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SafeHandle.h">
@@ -32,7 +32,7 @@
     <ClCompile Include="ProcessUtility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CTErrorCodes.cpp">
+    <ClCompile Include="PUErrorCodes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SafeHandle.cpp">

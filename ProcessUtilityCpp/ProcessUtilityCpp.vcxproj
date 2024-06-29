@@ -16,7 +16,7 @@
     <ProjectGuid>{2fa5e8a2-c609-44ee-82f5-b012df40ca92}</ProjectGuid>
     <RootNamespace>WC3CheatToolSharedLow</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>WC3CheatDetectorCpp</ProjectName>
+    <ProjectName>ProcessUtilityCpp</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -87,13 +87,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CTErrorCodes.h" />
+    <ClInclude Include="PUErrorCodes.h" />
     <ClInclude Include="NTDefinitions.h" />
     <ClInclude Include="ProcessUtility.h" />
     <ClInclude Include="SafeHandle.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CTErrorCodes.cpp" />
+    <ClCompile Include="PUErrorCodes.cpp" />
     <ClCompile Include="ProcessUtility.cpp" />
     <ClCompile Include="SafeHandle.cpp" />
   </ItemGroup>
