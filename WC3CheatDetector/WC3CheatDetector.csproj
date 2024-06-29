@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <None Update="lib\x64\StormLib.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

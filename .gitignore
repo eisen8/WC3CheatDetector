@@ -1,7 +1,7 @@
 [Oo]bj/
-bin/*/CheatPacks/
-bin/*/intermed/
-bin/*/tests/
+bin/
+
+
 .vs/
 .git/
 *.editorconfig
