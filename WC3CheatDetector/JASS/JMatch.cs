@@ -3,7 +3,7 @@
 namespace WC3CheatDetector.JASS
 {
     /// <summary>
-    /// Represents a Match from the JassRegexHelper
+    /// Represents a Match from the JSearch
     /// </summary>
     public class JMatch
     {

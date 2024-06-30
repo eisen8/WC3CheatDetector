@@ -16,53 +16,83 @@ namespace WC3CheatDetector
         private const uint MPQ_COMPRESSION_PKWARE = 0x08;
 
 
+        /// <summary>
+        /// Opens an MPQ archive from a WC3 map file.
+        /// </summary>
+        /// <param name="filePath">The file path to the map</param>
+        /// <param name="archiveHandle">Outputs a handle to the archive.</param>
+        /// <returns>True if successful and archiveHandle is set. On an error, the function returns false and GetLastError returns an error code.</returns>
         public bool OpenArchive(string filePath, out IntPtr archiveHandle)
         {
             return StormLib.SFileOpenArchive(filePath, 0, 0x0000, out archiveHandle);
         }
 
+        /// <summary>
+        /// Compacts (rebuilds) an MPQ archive
+        /// </summary>
+        /// <param name="archiveHandle">Handle to the MPQ archive</param>
+        /// <returns>True if successful. On an error, the function returns false and GetLastError returns an error code.</returns>
         public bool CompactArchive(IntPtr archiveHandle)
         {
             return StormLib.SFileCompactArchive(archiveHandle);
         }
 
+        /// <summary>
+        /// Closes an MPQ archive. Any unsaved MPQ tables are saved to the archive.
+        /// </summary>
+        /// <param name="archiveHandle">Handle to the MPQ archive</param>
+        /// <returns>True if successful. On an error, the function returns false and GetLastError returns an error code.</returns>
         public bool CloseArchive(IntPtr archiveHandle)
         {
             return StormLib.SFileCloseArchive(archiveHandle);
         }
 
-        public bool ExtractFile(IntPtr archiveHandle, string sourceFile, string extractedFile)
+        /// <summary>
+        ///  Exracts a file from the MPQ archive
+        /// </summary>
+        /// <param name="archiveHandle">Handle to the MPQ archive</param>
+        /// <param name="sourceMPQFilePath">Full path of the file within the MPQ archive to extract from</param>
+        /// <param name="extractedFilePath">A new file location (including name) to extract the file to. This function will copy the file from the MPQ Archive and create a local file.</param>
+        /// <returns>True if successful and copies the extracted file to the extractedFilePath. On an error, the function returns false and GetLastError returns an error code.</returns>
+        public bool ExtractFile(IntPtr archiveHandle, string sourceMPQFilePath, string extractedFilePath)
         {
-            return StormLib.SFileExtractFile(archiveHandle, sourceFile, extractedFile, 0x00000000);
+            return StormLib.SFileExtractFile(archiveHandle, sourceMPQFilePath, extractedFilePath, 0x00000000);
         }
 
-        public bool SaveFile(IntPtr archiveHandle, string sourceFile, string archivedName)
+        /// <summary>
+        /// Adds a file to the MPQ Archive. Will overwrite a file if it already exists in the Archive.
+        /// </summary>
+        /// <param name="archiveHandle">Handle to the MPQ archive</param>
+        /// <param name="sourceFilePath">The file path of the file to save to the MPQ archive.</param>
+        /// <param name="mpqArchivePath">The full path within the MPQ archive to save the file to (including name).</param>
+        /// <returns>True if successful. On an error, the function returns false and GetLastError returns an error code.</returns>
+        public bool SaveFile(IntPtr archiveHandle, string sourceFilePath, string mpqArchivePath)
         {
             uint dwFlags = MPQ_FILE_REPLACE_EXISTING | MPQ_FILE_COMPRESS;
-            return StormLib.SFileAddFileEx(archiveHandle, sourceFile, archivedName, dwFlags, MPQ_COMPRESSION_PKWARE, MPQ_COMPRESSION_NEXT_SAME);
+            return StormLib.SFileAddFileEx(archiveHandle, sourceFilePath, mpqArchivePath, dwFlags, MPQ_COMPRESSION_PKWARE, MPQ_COMPRESSION_NEXT_SAME);
         }
 
-        public bool RemoveFile(IntPtr archiveHandle, string sourceFile)
-        {
-            return StormLib.SFileRemoveFile(archiveHandle, sourceFile, 0);
-        }
 
-        public bool VerifyFile(IntPtr archiveHandle, string filePath)
-        {
-            uint dwFlags = 0x0000000F; // Verify for all errors
-            return StormLib.SFileVerifyFile(archiveHandle, filePath, dwFlags);
-        }
-
+        /// <summary>
+        /// Retrieves the last Win32 error code.
+        /// </summary>
+        /// <returns>Nonzero if there is an error code.</returns>
         public int GetErrorCode()
         {
             return Marshal.GetLastWin32Error();
         }
 
+        /// <summary>
+        /// Retrieves the last Win32 error code and the corresponding message.
+        /// </summary>
+        /// <param name="message">The message to be set if there is one.</param>
+        /// <returns>Nonzero if there is an error code. The message will be set to the error message if there is an error message.</returns>
         public int GetErrorCodeAndMessage(out string message)
         {
             int errorCode = Marshal.GetLastWin32Error();
             message = new Win32Exception(errorCode).Message;
-            return Marshal.GetLastWin32Error();
+
+            return errorCode;
         }
 
         [Flags]

@@ -12,7 +12,7 @@ namespace WC3CheatDetector.JASS
     public class JSearch
     {
         /**
-         * We are solving two problems here. One is the we want to ignore whitespace in the JASS however we want the output match to include any 
+         * We are solving two problems here. One is the we want to ignore whitespace in the JASS however we want the returned output match to include any 
          * whitespace originally present. The other is that the JASS file might use "\r", \"\n", "\n\r", "\r\n" or other combinations of
          * the two which will mess with our searching/regex. I am solving them both in a single solution here. We create a searchable version of the
          * string without whitespace and normalizing the newlines to just a single "\n". Then we use an index map to map the searchable string

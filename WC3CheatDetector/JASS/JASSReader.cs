@@ -23,14 +23,10 @@ namespace WC3CheatDetector.JASS
         /// Function for reading the war3map JASS file.
         /// </summary>
         /// <param name="mapFilePath">The path to the map file to read.</param>
+        /// <param name="mapName">The name of the map</param>
         /// <returns>The JASS file text or null if unsuccessful.</returns>
         public String ReadJASSFile(string mapFilePath, string mapName)
         {
-            /** 
-             * Note: These APIs commonly give back error codes to maps for a variety of reasons that don't necessarily mean we can't proceed. 
-             * The general strategy here will be to continue even with error codes unless it becomes impossible to continue. 
-            **/
-
             bool success = _mpq.OpenArchive(mapFilePath, out IntPtr archive);
 
             try

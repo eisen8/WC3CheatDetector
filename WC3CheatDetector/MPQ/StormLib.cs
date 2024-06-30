@@ -56,7 +56,7 @@ namespace WC3CheatDetector
             uint dwFlags, uint dwCompression, uint dwCompressionNext);
 
         /// <summary>
-        /// Exracts a file from the MPQ archive
+        /// Exracts a file from the MPQ archive.
         /// </summary>
         /// <param name="hMpq">Handle to the MPQ archive</param>
         /// <param name="szToExtract">Name of the file to extract</param>
@@ -67,23 +67,14 @@ namespace WC3CheatDetector
         public static extern bool SFileExtractFile(IntPtr hMpq, [MarshalAs(UnmanagedType.LPStr)] string szToExtract, [MarshalAs(UnmanagedType.LPTStr)] string szExtracted, uint dwSearchScope);
 
 
-        /// <summary>
-        /// Exracts a file from the MPQ archive
-        /// </summary>
-        /// <param name="hMpq">Handle to the MPQ archive</param>
-        /// <param name="szFileName">Name of the file to remove.</param>
-        /// <param name="dwSearchScope">This parameter is ignored in the current version of StormLib</param>
-        /// <returns>On an error, the function returns false and GetLastError returns an error code.</returns>
-        [DllImport(STORMLIB_DLL, CallingConvention = CallingConvention.Winapi, SetLastError = true, ThrowOnUnmappableChar = true)]
-        public static extern bool SFileRemoveFile(IntPtr hMpq, [MarshalAs(UnmanagedType.LPStr)] string szFileName, uint dwSearchScope);
-
-        [DllImport(STORMLIB_DLL, CallingConvention = CallingConvention.Winapi, SetLastError = true, ThrowOnUnmappableChar = true)]
-        public static extern bool SFileVerifyFile(IntPtr hMpq, [MarshalAs(UnmanagedType.LPStr)] string szFileName, uint dwFlags);
-
-
-
-
         // Ended up not needing the below after testing with them. Leaving here just in case.
+
+        //[DllImport(STORMLIB_DLL, CallingConvention = CallingConvention.Winapi, SetLastError = true, ThrowOnUnmappableChar = true)]
+        //public static extern bool SFileRemoveFile(IntPtr hMpq, [MarshalAs(UnmanagedType.LPStr)] string szFileName, uint dwSearchScope);
+
+
+        //[DllImport(STORMLIB_DLL, CallingConvention = CallingConvention.Winapi, SetLastError = true, ThrowOnUnmappableChar = true)]
+        //public static extern bool SFileVerifyFile(IntPtr hMpq, [MarshalAs(UnmanagedType.LPStr)] string szFileName, uint dwFlags);
 
         //[DllImport(STORMLIB_DLL, CallingConvention = CallingConvention.Winapi, SetLastError = true, ThrowOnUnmappableChar = true)]
         //public static extern bool SFileFlushArchive(IntPtr hMpq);
